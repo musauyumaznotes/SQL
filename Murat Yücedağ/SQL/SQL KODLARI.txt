@@ -1,0 +1,561 @@
+---------------------------4.Ders--------------------------
+--Create database okul
+-- use okul
+--create table ogr
+--( 
+--OgrNumara varchar(4),
+--OgrAd varchar(12),
+--OgrSoyad varchar(20),
+--OgrTC char(11),
+--OgrBilgi Text
+--)
+
+---------------------------5.Ders--------------------------
+--use okul
+--alter table ogr add Notlar tinyint
+--alter table ogr add BaslamaTarih smalldatetime,OgrMahalle varchar(40)
+--alter table ogr alter column notlar smallint
+
+---------------------------6.Ders--------------------------
+--use okul
+--create table ogr2
+--(
+--ad varchar(50),
+--Soyad varchar(50)
+--)
+
+--drop table ogr2
+
+--alter table ogr drop column OgrSoyad,Veli,BaslamaTarih,OgrMahalle
+--truncate table ogr
+
+---------------------------7.Ders--------------------------
+--use okul
+--select OgrNumara,OgrAd,OgrBilgi from ogr
+
+---------------------------8.Ders--------------------------
+
+--create database Kitaplik
+--use Kitaplik
+--create table Kitap(
+--KitapNo int,
+--KitapAd varchar(50),
+--KitapYazar varchar(30),
+--KitapSayfa smallint,
+--KitapFiyat int,
+--KitapTarih smalldatetime,
+--KitapYayınevi varchar(50)
+--)
+--use Kitaplik
+--select * from Kitap where KitapAd='Palto'
+--select * from Kitap where KitapSayfa<150
+--select * from Kitap where KitapYazar='Reşat Nuri Güntekin'
+
+---------------------------9.Ders--------------------------
+--use Kitaplik
+--select * from Kitap where KitapAd='Nutuk'
+--select * from Kitap where KitapYayınevi='Merkür' and KitapFiyat>8
+
+--select * from Kitap where KitapSayfa>200 Or KitapFiyat>12 or KitapYazar ='Charles Dickens'
+
+--select * from Kitap where KitapSayfa in(200,300,220,80) parantez içindeki değerler sağlanıyorsa getir
+--select * from Kitap where KitapAd like '%a%' and KitapSayfa in(75,100,200,300) and KitapFiyat>10
+
+--select * from Kitap where KitapAd like 'b%'
+---------------------------10.Ders--------------------------
+--insert into Kitap values(20,'İnsan Ne İle Yaşar','Tolstoy',110,5,'2016-08-12','MaviBulut')
+--select * from Kitap
+--insert into Kitap(KitapNo,KitapAd,KitapSayfa,KitapTarih,KitapYayınevi) values(21,'Suç Ve Ceza',1250,'2016-07-19','Merkür')
+
+---------------------------11.Ders--------------------------
+--use Kitaplik
+--select * from Kitap where KitapFiyat=12
+--update Kitap set KitapYazar='Dostoyevski',KitapFiyat=22 where KitapAd='Suç ve Ceza'
+--update Kitap set KitapFiyat=5 where KitapFiyat<5
+--update Kitap set KitapFiyat=(KitapFiyat * 0.2)  where KitapFiyat=10
+
+---------------------------12.Ders--------------------------
+--use Kitaplik
+--select * From kitap
+--delete from Kitap where KitapNo=8
+--delete from kitap where KitapSayfa>880 or KitapFiyat=11
+
+---------------------------13.Ders--------------------------
+--use Kitaplik
+--Select * from kitap
+--insert into Kitap values (23,'Beyaz Geceler','Dostoyevski',80,5 ,'2015-09-11','Mavi Bulut')
+--insert into Kitap values (24,'Beyaz Geceler','Dostoyevski',80,5 ,'2015-09-11','Mavi Bulut')
+--select distinct KitapYayınevi from Kitap
+--select distinct KitapYazar from Kitap
+
+---------------------------14.Ders--------------------------
+--select * from Kitap order by KitapNo desc
+--insert into Kitap values(25,'Kürk Mantolu Madonna','Sabahattin Ali',160,9,'2016-04-07','Jüpiter')
+--insert into Kitap values(2,'Martin Eden','Jack London',520,12,'2015-06-17','Güneş')
+--update Kitap set KitapNo=22 where KitapAd='Martin Eden'
+--select * from Kitap order by KitapYayınevi,KitapFiyat asc
+
+---------------------------15.Ders--------------------------
+--select KitapFiyat as'Kitap Ücreti' , KitapAd as 'Kitap İsmi' from Kitap
+--select KitapAd,KitapYazar,KitapFiyat,KitapFiyat*5 as 'Yeni Fiyat' from kitap
+
+
+---------------------------16.Ders--------------------------
+use Kitaplik
+--select * from Kitap Where KitapTarih <'2015-05-24'
+--select * from Kitap where KitapFiyat>9 or KitapYayınevi='merkür' order by KitapAd desc
+--select * from kitap where KitapYayınevi in('Merkür','Ay','Jüpiter')
+--select * from Kitap where KitapFiyat=>10 and Kitapfiyat<20
+--select * from kitap where KitapFiyat between 9 and 25
+
+---------------------------17.Ders--------------------------
+--use okulum
+--create table ogrenci
+--(
+--ogrno int not null primary key,
+--ogradi varchar(15),
+--ogrsoyadi varchar(20),
+--ogradres varchar(50),
+--ogrsinif varchar(2),
+--ogrilce varchar(20) default 'Seyhan',
+--ogrsinav1 tinyint check (ogrsinav1>0),
+--ogrsinav2 int constraint chks2 check (ogrsinav2>=0 and ogrsinav2 <=100 ),
+--ogrkol varchar(20) constraint chkkol check(ogrkol in ('Sağlık','Kütüphane','Çevre','Trafik'))
+--)
+--drop table ogrenci
+
+--alter table ogrenci add devamsızlık tinyint,
+--ogrkayittarih smalldatetime,
+--ogrborc tinyint 
+
+--select * from ogrenci
+--alter table ogrenci add check (devamsızlık<20)
+--alter table ogrenci alter column ogradres varchar(160)  
+
+--alter table ogrenci drop column ogrborc
+--truncate table ogrenci
+--drop table ogrenci
+
+---------------------------20.Ders--------------------------
+--select * from Kitap where KitapAd like '%a%'
+--select * from Kitap where KitapAd like 'a%' a ile  başlayan
+--select * from Kitap where KitapAd like '%a' a ile biten 
+--select * from Kitap where KitapAd like '[ab]%'
+--select * from Kitap where KitapAd like 'b%r' b ile başlayıp r ile biten
+--select * from Kitap where KitapAd like '[a-e]%' a dan e ye kadar ismi başlayan kitaplar
+--select * from Kitap where KitapAd like 'e____' 
+--select * from Kitap where KitapAd like '_a%' ikinci harfi a olanlar 
+--select * from kitap Where KitapAd like '[^a-f]%' a dan f ye kadar ismi başlamayan kitaplar
+
+---------------------------21.Ders--------------------------
+--select 20+4 as 'Toplam'
+--select 20+4 as 'Toplam', 20-4 as 'Fark' ,20*4 as 'Çarpım' , 20/4 as 'Bölüm'
+--select KitapAd ,KitapFiyat,KitapFiyat+3 as 'Yeni Fiyat' from Kitap 
+--select KitapAd +' - '+ KitapYazar from Kitap
+--select SUBSTRING(KitapAd,1,5) from Kitap
+--select Left(KitapAd,7) From Kitap
+--select upper (KitapAd) as 'BÜYÜK HARF',lower (KitapAd) as 'KÜÇÜK HARF' from kitap
+--select KitapAd,LEN(KitapAd) as 'HARF SAYISI' From Kitap where LEN(KitapAd)>15
+--select KitapAd ,REPLACE(KitapYazar,'Zülfü Livaneli','Z.Livaneli') from Kitap
+--select reverse(KitapAd) from Kitap
+
+---------------------------22.Ders--------------------------
+--select abs(KitapFiyat) from Kitap mutlak alma
+--select CEILING(KitapFiyat) from Kitap üste yuvarlama
+--select FLOOR(KitapFiyat) from Kitap  üste yuvarlama
+--select KitapAd,KitapFiyat,ROUND(KitapFiyat,1) from Kitap
+--select power (2,5) as 'Üs',SQRT(4) as 'Karekök'
+--select sum(KitapFiyat) as 'Toplam' from Kitap where KitapTarih between '2016-01-01' and '2016-12-31'
+--select avg(KitapFiyat) From Kitap Ortalama 
+--select MAx(KitapFiyat), MIN(KitapFiyat) from Kitap 
+--select count(KitapAd) from Kitap Kitap Sayısını verir 
+
+---------------------------23.Ders--------------------------
+
+--select GETDATE() anlık tarih ve saati getirir
+--select DATEPART(YEAR,GETDATE()) as 'YIL',DATEPART(MONTH,GETDATE()) as 'AY',DATEPART(DAY,GETDATE()) as 'GÜN' ,Datepart(DAYOFYEAR,GETDATE()) as 'YILIN KAÇINCI GÜNÜ' ,
+--datepart(WEEK,GETDATE()) as 'YILIN KAÇINCI HAFTASI' ,DATEPART(QUARTER,GETDATE()) as 'KAÇINCI ÇEYREK' verdiğin tarihin bazı fonksiyonları
+--select DATEPART(QUARTER,'2016-09-21')
+
+--select * from Kitap where DATEPART(YEAR,KitapTarih)=2016 yıl olarak filtreleme 
+--select * from Kitap where DATEPART(MONTH,KitapTarih)=12 ay olarak filtreleme 
+
+
+---------------------------24.Ders--------------------------
+--select * from Kitap
+--select DATEDIFF(YEAR,'1923-10-29','2021-10-29') as 'Yıl Farkı'
+--select DATEDIFF(MONTH,'2016-01-05','2016-12-01') as 'Ay Farkı'
+--select DATEDIFF(DAY,'2016-01-01','2016-12-01') as 'Gün Farkı'
+--select DATEDIFF(year,'1919-05-19',GETDATE()) as 'YIL'
+--select DATEADD(DAY,10,GETDATE()) 10 Gün ekleme yaptık 
+
+---------------------------25.Ders--------------------------
+--select KitapYazar,Count(KitapAd) as 'Kitap  Sayısı' from Kitap group by KitapYazar
+--select KitapAd,count(KitapAd) as 'Stok' from Kitap group by KitapAd
+--select KitapYayınevi,count(KitapAd) from Kitap group By KitapYayınevi
+--select KitapYayınevi,Sum(KitapFiyat) as 'Toplam Fiyat' from Kitap group by KitapYayınevi
+--select KitapYayınevi,Avg(KitapFiyat) as 'Toplam Fiyat' from Kitap group by KitapYayınevi
+--select KitapYayınevi, Min(KitapFiyat) as 'En Düşük',MAX(KitapFiyat) as 'En Yüksek' from Kitap  group by KitapYayınevi
+--select KitapYayınevi,Count(KitapAd) from Kitap where KitapFiyat>10 group by KitapYayınevi
+
+---------------------------26.Ders--------------------------
+--create table kisiler
+--(
+--	KisiNo tinyint,
+--	Ad varchar(20),
+--	Soyad varchar(30),
+--	Meslek varchar(30),
+--	Sehir varchar(15),
+--	Maas int
+--)
+--select Meslek,Count(Ad) as 'Personel Sayısı'from kisiler group by Meslek order by Count(Ad)
+--select Sehir,Count(Ad) from Kisiler group by Sehir order by Count(Ad)
+--select Meslek,count(ad),sum(Maas) as 'Toplam Maaş' from Kisiler group by Meslek
+--select Meslek, avg(Maas) as 'Ortalama Maaş' from Kisiler group by Meslek
+--select Sehir,count(ad) as 'Kişi Sayısı' from kisiler group by Sehir
+--select Meslek,Max(Maas) as 'En Yüksek',Min(Maas) as 'En Düşük' from Kisiler group by Meslek
+
+---------------------------27.Ders--------------------------
+--select KitapYayınevi,Count(KitapAd) as 'Kitap Sayısı' , Sum(KitapFiyat) as 'Alacak', sum(Vergi) as 'Verecek', (sum(KitapFiyat)-sum(Vergi)) as 'Kar' from Kitap  group By KitapYayınevi having sum(KitapFiyat)-sum(Vergi) <15
+--select KitapYayınevi,Count(KitapAd) as 'Kitap Sayısı' , Sum(KitapFiyat) as 'Alacak', sum(Vergi) as 'Verecek', (sum(KitapFiyat)-sum(Vergi)) as 'Kar' from Kitap  group By KitapYayınevi having Count(KitapAd)>=4
+
+---------------------------28.Ders--------------------------
+--select KitapAd,KitapTur,KitapRengi from Kitap k1, Kitap2 k2 , Kitap3 k3 
+--where k1.KitapAd= k2.KitapAdi and
+--k2.KitapRenk = k3.KitapRengi
+
+---------------------------29.Ders--------------------------
+--select KitapAd,KitapRenk from Kitap k1 inner join Kitap2 k2 on k1.KitapAd=k2.KitapAdi
+--select KitapAd,KitapRenk,Kitap from Kitap k1 inner join Kitap2 k2 on k1.KitapAd=k2.KitapAdi
+--select sum(KitapFiyat)as 'Toplam Fiyat',KitapTuru From Kitap k1 inner join Kitap2 k2 
+--on k1.KitapAd =k2.KitapAdi
+--Group by KitapTur order by KitapTur
+
+--select KitapAd,KitapTur,KitapRenk From Kitap k1 inner join Kitap2 k2
+--on k1.KitapAd = k2.KitapAdi inner join Kitap3 k3
+--on k2.KitapRenk = k3.KitapRenk
+
+--select KitapTur,Sum(KitapFiyat) as 'Toplam' From Kitap k1 inner join Kitap2 k2
+--on k1.KitapAd = k2.KitapAdi inner join Kitap3 k3
+--on k2.KitapRenk = k3.KitapRenk
+--group by KitapTur order  by KitapTur asc
+
+---------------------------30.Ders--------------------------
+--select KitapAd,kitapRenk from Kitap k1 inner join Kitap2 k2
+--on k1.KitapAd = k2.KitapAdi
+
+--select KitapAd,kitapRenk from Kitap k1 left outer join Kitap2 k2
+--on k1.KitapAd = k2.KitapAdi
+
+--select KitapAd,kitapRenk from Kitap k1 right outer join Kitap2 k2
+--on k1.KitapAd = k2.KitapAdi
+
+---------------------------31.Ders--------------------------
+--select KitapAd,KitapRenk from Kitap k1 full outer join Kitap2 k2 on
+--k1.KitapAd = k2.KitapAdi
+
+--select KitapAd,KitapRenk from Kitap k1 cross join Kitap2 k2 
+
+---------------------------32.Ders--------------------------
+
+--select KitapAd from Kitap
+--intersect
+--select KitapAdi from Kitap2
+
+--select KitapAd from Kitap
+--except
+--select KitapAdi from Kitap2
+
+--select KitapAd, from Kitap2
+--except
+--select KitapAd from Kitap
+
+
+---------------------------33.Ders--------------------------
+
+--select KitapAd from Kitap 
+--union
+--select Kitapadi from kitap2
+
+--select KitapAd from Kitap 
+--union all
+--select Kitapadi from kitap2
+
+---------------------------34.Ders--------------------------
+
+--select * from Kitap where vergi=(select vergi from kitap where KitapAd='Palto')
+
+--select * from Kitap where KitapFiyat=(select KitapFiyat from Kitap where KitapAd='Ezilenler')
+
+--select * from Kitap where KitapFiyat=(select kitappuan from kitap2 where Kitaprenk='sarı')
+
+---------------------------35.Ders--------------------------
+--Begin Transaction -- işlem başlangıcı
+--update Kitap set KitapSayfa=50
+--update kitap set KitapFiyat=1
+--select * from kitap
+--rollback
+--select * from Kitap
+
+---------------------------36.Ders--------------------------
+--use Kitaplik
+--declare @sehir varchar(15)
+--declare @ilce varchar(15)
+--set @sehir = 'Kahramanmaraş'
+--set @ilce = 'Elbistan'
+--print @sehir + ' / ' + @ilce
+
+---------------------------37.Ders--------------------------
+----use Kitaplik
+
+--declare @ogrenciler table 
+--(
+--ogrno varchar(3),
+--ograd varchar(20),
+--ogrsoyad varchar(30),
+--ogrkol varchar (30),
+--ogrmahalle varchar(50)
+--)
+--insert into @ogrenciler values('A25','Baran','YÜcedağ','Sağlık','Şakirpaşa')
+--insert into @ogrenciler values('B16','Ali','Yıldız','Çevre','Yeşilevler')
+--insert into @ogrenciler values('A28','Ayşe','Kaya','Trafik','Fevzipaşa')
+--select  * from @ogrenciler
+
+---------------------------38.Ders--------------------------
+--declare  @yeni table(
+--renk varchar(10),
+--baski tinyint,
+--derece varchar(1)
+--)
+---------------------------40.Ders--------------------------
+--declare @kitapsayi tinyint
+--select @kitapsayi=count(KitapAd) from Kitap
+--if(@kitapsayi<=50)
+--begin
+--print 'Yetersiz'
+--end
+--else
+--begin
+--print 'yeterli'
+--end
+---------------------------41.Ders--------------------------
+--declare @kalite varchar(1)
+--set @kalite='e'
+--select 'Durum'=
+--case @kalite
+--when 'A' then 'Çok Kaliteli'
+--when 'A' then 'Kaliteli'
+--when 'A' then 'Orta'
+--when 'A' then 'Eh İşte'
+--else 'Bilinmeyen Değer'
+--end
+
+---------------------------42.Ders--------------------------
+--declare @sayi int,@sayi2 int
+--set @sayi=1
+--set @sayi2=2
+--print @sayi
+--print @sayi2
+--declare @sayi int
+--set @sayi=1
+--while(@sayi<=10)
+--begin
+--print @sayi
+--set @sayi= @sayi+1
+--end
+---------------------------43.Ders--------------------------
+
+--declare @sayi int
+--set @sayi=1
+--while(@sayi<=10)
+--begin
+--print cast(@sayi as varchar(10)) + ' Karesi:' + cast(@sayi * @sayi as varchar(3))
+--set @sayi=@sayi+1
+--end
+--declare @sayi int 
+--set @sayi=1
+--while(@sayi<=10)
+--begin
+--if(@sayi=7)
+--begin
+--set @sayi=@sayi+1
+--continue
+--end
+--print cast(@sayi as varchar(2)) + ' Karesi: ' + cast(@sayi * @sayi as varchar(3))
+--set @sayi= @sayi+1
+--end
+--declare @sayac tinyint
+--set @sayac=1
+--git:
+--print 'Sayaç: ' + cast(@sayac as varchar(1))
+--set @sayac=@sayac+1
+--while(@sayac<=5)
+--goto git
+---------------------------44.Ders--------------------------
+--waitfor delay '00:00:15' 
+--select * from kisiler
+--waitfor time '19:19:00'
+--select * from Kitap
+---------------------------45.Ders--------------------------
+
+--create procedure Deneme
+--as
+--select * from Kitap where KitapSayfa>250
+--alter procedure Deneme
+--as
+--select * from Kitap where KitapSayfa>400
+--execute Deneme
+--drop procedure Deneme
+
+--set nocount off
+--select * from Kitap
+
+--Create Procedure Toplam(@sayi1 int,@sayi2 int)
+--as
+--declare @sonuc int
+--set @sonuc=@sayi1+@sayi2
+--Alter Procedure Toplam(@sayi1 int,@sayi2 int)
+--as
+--declare @sonuc int
+--set @sonuc=@sayi1+@sayi2
+--print @sonuc
+
+exec Toplam 1,3
+
+---------------------------46.Ders--------------------------
+--create procedure carpım1 (@s1 int , @s2 int,@s3 int)
+--as
+--declare @sonuc int
+--set @sonuc = @s1 * @s2 * @s3
+--print 'Sonuç: ' +cast(@sonuc as varchar(3))
+--exec carpim 4,5,6
+
+--create procedure yayınEviKitapları(@yayınevi varchar(15))
+--as
+--select * from Kitap where KitapYayınevi=@yayınevi
+--select * from Kitap 
+
+--exec yayınEviKitapları'ay'
+
+---------------------------47.Ders--------------------------
+--create function buyukHarf (@gelenDeger varchar(20))
+--returns varchar(20)
+--as
+--begin
+--return upper(@gelenDeger)
+--end
+--select dbo.buyukHarf(KitapAd) from Kitap
+
+--select KitapAd From Kitap
+
+--create function yayıneviKontrol(@deger varchar(15))
+--returns int
+--as
+--begin
+--declare @sayi int
+--select @sayi=COUNT(KitapAd) from Kitap where KitapYayınevi=@deger
+--return @sayi
+--end
+--select dbo.yayıneviKontrol('günes')
+
+---------------------------48.Ders--------------------------
+--select * from Kitap
+--create function kitapVergi(@gelenVergi int)
+--returns table 
+--as
+--return (select *from Kitap where Vergi>@gelenVergi)
+
+--select * from dbo.kitapVergi(3)
+---------------------------49.Ders--------------------------
+
+----create trigger deneme1
+----on Kitap
+----after insert 
+----as
+----Begin
+----select 'Yeni Kitap Kaydedildi'
+----end
+--insert into Kitap values(33,'İnsan Ne İle Yaşar','Lev Tolstoy',176,20,'2021-08-19','Ay',4)
+----select * from Kitap
+
+--create trigger deneme2
+--on Kitap
+--after insert 
+--as 
+--begin 
+--select KitapAd,Vergi,Vergi=Vergi+80 from Kitap where Vergi=8
+--end
+
+--insert into Kitap values(34,'İnsan Ne İle Yaşar','Lev Tolstoy',176,20,'2021-08-19','Ay',4)
+
+---------------------------50.Ders--------------------------
+--Create Trigger GuncelleKontrol
+--on Kitap
+--After Update
+--as
+--begin
+--Update Guncelleme set Sayac=Sayac+1
+--end
+--update Kitap set KitapFiyat=6 where KitapAd='Çalıkuşu'
+--select * from Kitap
+--select * from Guncelleme
+
+---------------------------51.Ders--------------------------
+--update Guncelleme set Sayac=10
+--select * from Guncelleme
+
+--create trigger SilmeKontrol
+--on Kitap
+--After Delete
+--as 
+--begin
+--select 'Kayıt Silindi'
+--End
+--select * from Kitap
+--delete from Kitap where KitapYazar='Lev Tolstoy'
+
+--create trigger SilmeKontrol2
+--on kitap
+--after delete
+--as 
+--begin
+--update guncelleme set Sayac=sayac-1
+--end
+
+--delete from Kitap where KitapYayınevi='Mavi Ay'
+--select * from Guncelleme
+
+---------------------------52.Ders--------------------------
+--create trigger insdeneme
+--on Kitap
+--instead of insert 
+--as
+--begin
+--select 'Eklemede Sıkıntı Yok'
+--end
+
+--insert into Kitap values(34,'İnsan Ne İle Yaşar','Lev Tolstoy',176,20,'2021-08-19','Ay',4)
+--create trigger insdeneme2
+--on Kitap
+--instead of Update
+--as
+--begin
+--select 'Kayıt güncellenebilir'
+--end
+
+--update Kitap set KitapNo=50 where KitapYazar='Lev Tolstoy'
+--select * from Kitap
+
+--create trigger insdeneme3
+--on kitap
+--instead of delete
+--as
+--begin 
+--select 'KAyıt silinebilir'
+--end
+
+--delete from Kitap where KitapNo=32
+
+---------------------------53.Ders--------------------------
+---------------------------54.Ders--------------------------
+---------------------------55.Ders--------------------------

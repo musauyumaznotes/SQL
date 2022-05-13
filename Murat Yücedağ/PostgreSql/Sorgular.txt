@@ -1,0 +1,452 @@
+ values---------INSERT INTO-------------VALUES------------------- 11:34 28.06.2021
+---------DELETE-------------
+---------UPDATE-------------SET-----------------
+---------ORDER BY-------------
+---------COUNT-------------
+---------SUM-------------
+---------AVG-------------
+---------MİN-------------
+---------MAX-------------
+---------LIKE-------------
+---------GROUP BY-------------
+---------HAVING-------------
+
+
+-- insert into musteri(id,ad,soyad,sehir) values(10,'Nalan','Tunç','Adana')
+ --select id,ad,soyad from musteri
+ -- select * from musteri where ad='Mehmet'
+ -- select * from musteri where sehir ='Ankara' and id=4 or sehir ='Adana' or soyad = 'Kaya'
+ -- select * from musteri where bakiye>3000 or bakiye<=2700
+ -- SELECT * FROM musteri WHERE sehir = 'Ankara' and bakiye >6000 or soyad ='Çınar'
+ -- SELECT * FROM musteri WHERE ad NOT LIKE '%e%'
+-- DELETE FROM musteri where id =10
+-- SELECT * FROM musteri order by id
+-- update musteri set bakiye=5750 where id =1
+-- update musteri set sehir ='Ankara' where sehir='İzmir'
+-- SELECT * FROM musteri order by id
+-- select count(*) from musteri where sehir='Ankara'
+-- SELECT sum(bakiye) from musteri where sehir!='Ankara'
+-- SELECT * FROM musteri order by  id
+-- select avg(bakiye) from musteri where sehir='Ankara'
+-- select min(bakiye),max(bakiye) FROM musteri
+-- select max(bakiye) - min(bakiye) from musteri
+-- select min(bakiye) FROM musteri where sehir='Bursa'
+-- select * from musteri where sehir='Bursa'
+-- UPDATE musteri set bakiye=5800 where ad='Emel' and sehir='Bursa'
+-- select sehir,count(*) as kişi FROM musteri group by sehir order by count(*)
+-- select sehir,sum(bakiye) as maaş from musteri GROUP by sehir
+-- select sehir ,avg(bakiye) as ortMaaş FROM musteri GROUP by sehir
+-- select sehir, count(*) from musteri group by sehir having count(*)>3
+-- select  avg(bakiye)as ortalama,sehir from musteri group by sehir having avg(bakiye)>5000 and sehir like '%s%'
+-- SELECT * from musteri where bakiye =(SELECT max(bakiye) from musteri)
+-- SELECT * FROM musteri where bakiye = (SELECT max(bakiye) from musteri ) and where sehir='İstanbul'
+-- insert into meslek (id,ad) values(4,'doktor')
+-- select * FROM musteri
+-- select * from musteri where meslek=(select id from meslek where ad='öğretmen') order by id
+-- update musteri set bakiye = bakiye+bakiye*0.1 where meslek = (select id from meslek where ad ='mühendis')
+-- select * from musteri where meslek = (select id from meslek where ad ='mühendis')
+-- update musteri set bakiye=bakiye+bakiye*0.15 where meslek=(select id from meslek where ad = 'öğretmen')
+-- select * from musteri where meslek = (select id from meslek where ad ='öğretmen')
+-- select * from musteri where sehir = 'Ankara' and meslek=(select id from meslek where ad='öğretmen')
+-- TRUNCATE table urun
+-- SELECT * from urun
+-- SELECT musteri.ad,soyad,sehir,meslek.ad  from musteri inner join meslek on musteri.meslek=meslek.id
+
+
+
+-- insert into fakulte (id,ad) VALUES(3,'Iibf')
+-- SELECT * FROM fakulte
+-- insert into bolum (bolumid,bolumad,bolumf) values(4,'Tiyatro',5)
+-- SELECT * FROM bolum
+-- insert into bolum (bolumid,bolumad,bolumf) values(8,'Besyo',7)
+-- SELECT * FROM bolum
+-- select * from bolum where bolumf=(SELECT id from fakulte where ad='Iibf')
+-- select bolumf,count(*) from bolum GROUP by bolumf order by bolumf
+-- select ad,count(*) from bolum INNER join fakulte on bolum.bolumf=fakulte.id GROUP by ad
+-- insert into bolum (bolumid,bolumad,bolumf) values(8,'metalurji',1)
+-- select fakulte.ad,count(*) from bolum inner join fakulte on bolum.bolumf=fakulte.id group by ad having max(select count(*) from bolum)
+-- select * from bolum
+-- select * from fakulte order by id
+-- select bolumid,bolumad,ad from fakulte left join bolum on fakulte.id=bolum.bolumf
+-- select id,ad,bolumad from bolum right join fakulte on fakulte.id = bolum.bolumf
+-- select id,ad,bolumad from bolum full join fakulte on fakulte.id = bolum.bolumf
+-- select id,ad,bolumad from bolum cross join fakulte
+
+-- select bolumad,ad from bolum cross join fakulte
+-- select * from bolum2
+-- INTERSECT
+-- select * from bolum3
+
+-- select * from bolum2
+-- EXCEPT
+-- select * from bolum3
+
+-- select * from bolum2
+-- UNION
+-- select * from bolum3
+
+-- select * from bolum2
+-- UNION All
+-- select * from bolum3 order by id
+
+
+-------------------METİNSEL FONKSİYONLAR----------------------
+-- select ASCII ('A')
+-- select concat(,'Günaydın', 'Sql', 'Dersleri')
+-- select concat_WS ('*','Günaydın', 'Sql', 'Dersleri')
+
+-- select left('Merhaba Dünya',3)
+-- SELECT RIGHT('Merhaba Dünya',3)
+-- SELECT length('Benim manevi mirasım bilim ve akıldır')
+
+-- SELECT id, REPLACE(adi,'ı','i') from bolum3 ı değerleri i yapar
+-- select reverse(adi) from bolum3 girilen değeri ters çevirir
+-- select SUBSTRING('Murat Yücedağ',4,2)
+-- select lower(adi) from bolum3 girilen değeri küçük yazar
+-- select upper(adi) from bolum3 girilen değeri büyük yazar
+
+----------------MATEMATİKSEL FONKSİYONLAR--------------------
+-- SELECT abs(-5) 
+-- select ceiling(4.85) ondalık sayıyı en yakın üst sayıya yuvarlar
+-- select floor(4.85) ondalık sayıyı en yakın alt sayıya yuvarlar
+-- SELECT pi() pi değerini verir
+-- SELECT power(2,4) 2 üssü 4
+-- select random() 0-1 arası random değer getirir
+-- SELECT round(18.12345,2) virgülden sonraki basamak kadar değeri getirir
+-- select sign(-5) girilen değerin işaretine göre 1,-1,0 değerini alır
+-- select sqrt(625) karekök alır
+-- SELECT square(10) ---> Çalışıyor mu Kontrol et
+-- select Log(50) logaritma sonucunu verir
+
+---------------- Tarih Zaman Fonksiyonları--------------------
+-- insert INTO kitaplar (id,ad,yazar,tarih) values (6,'Satranç','Zweig','01.09.2020')
+-- SELECT * FROM kitaplar
+-- select CURRENT_DATE Güncel Tarihi Getirir
+-- SELECT CURRENT_TIME(0) Güncel Saati Getirir
+-- SELECT now() Güncel tarih ve saati verir
+-- SELECT Age(TIMESTAMP '01.06.2020') Girilen tarih değeriyle güncel tarih arasındaki fark
+-- SELECT ad,tarih,age(now(),tarih) from kitaplar   AGE() Tablo Kullanımı
+-- SELECT * FROM kitaplar
+
+----------------- VİEWS---------------------------------------------
+--  SELECT bolum.bolumid,
+--     bolum.bolumad,
+--     fakulte.ad,dersler.dersad
+--    FROM bolum
+--      JOIN fakulte ON fakulte.id = bolum.bolumf
+-- 	 JOIN dersler ON bolum.bolumid=dersler.bolumid
+
+-- SELECT * FROM view1
+
+
+-- DROP VIEW If Exists view1;
+-- CREATE VIEW view1 
+-- ALTER VIEW view1 -------Çalışmadı
+-- as
+-- SELECT bolum.bolumid,
+--     bolum.bolumad,
+--     fakulte.ad,
+--     dersler.dersad,
+-- 	dersler.kontenjan
+--    FROM bolum
+--      JOIN fakulte ON fakulte.id = bolum.bolumf
+--      JOIN dersler ON bolum.bolumid = dersler.bolumid;
+-- DROP VIEW view2
+
+-- create view view2
+-- as
+-- select * FROM dersler
+
+-- SELECT * from view2 
+-- insert into view2 (id,dersad) VALUES(7,'Mesleki İngilizce')
+
+-- SELECT * from view2
+-- insert into view2 (id,dersad) VALUES(9,'oop')
+
+-- SELECT * from dersler
+
+
+----------------- DEĞİŞKENLER---------------------------------------------
+
+-- do $$
+-- declare x int:=20;
+-- 		y int:=5;
+-- 		toplam int;
+-- 		fark int;
+-- 		çarpım int;
+-- 		bolum int;
+
+-- begin
+-- 		toplam= x + y;
+-- 		fark = x-y;
+-- 		bolum=x/y;
+-- 		çarpım=x*y;
+-- raise notice 'Sayı 1: %',x;
+-- raise notice 'Sayı 2: %',y;
+-- raise notice 'Toplam: %',toplam;
+-- raise notice 'Fark: %',fark;
+-- raise notice 'Bölüm: %',bolum;
+-- raise notice 'Çarpım: %',çarpım;
+-- end $$;
+
+-- do $$
+-- declare toplam int;
+-- 		toplam2 int;
+-- 		toplam3 int;
+-- begin
+-- toplam:=(SELECT count(*) from dersler);
+-- toplam2:=(SELECT count(*) from dersler where length(dersad)>10);
+-- toplam3:= toplam-toplam2;
+-- raise notice 'Derlerin Toplam Kayıt Sayısı: %',toplam;
+-- raise notice 'Derlerin Toplam Kayıt Sayısı: %',toplam2;
+-- raise notice 'Derlerin Toplam Kayıt Farkı: %',toplam3;
+-- end $$
+ 
+----------------- IF - ELSE---------------------------------------------
+Do $$
+-- DECLARE 
+-- sinav1 int:=20;
+-- sinav2 int:=64;
+-- sinav3 int:=15;
+-- ortalama int;
+-- begin
+-- ortalama:=(sinav1+sinav2+sinav3)/3;
+-- raise notice 'Öğrenci Sınav Ortalaması:%',ortalama;
+-- if ortalama >=50 then
+-- Raise Notice 'Öğrenci Dersi Geçti';
+-- else 
+-- Raise Notice 'Öğrenci Dersten Kaldı';
+-- end if;
+-- end $$
+
+-- Do $$
+-- Declare sayi int:=11;
+-- Begin
+-- if sayi%2=0 then
+-- Raise Notice 'Sayi Çifttir';
+-- else 
+-- Raise Notice 'Sayi Tektir';
+-- end if;
+
+-- end $$
+
+-- SELECT * from dersler
+-- update dersler SET bolumid=1 where bolumid is null
+-- select count(*) from dersler
+--select * from bolum
+-- do $$ 
+-- declare Adet int;
+-- Begin
+-- Adet=(SELECT count(*)from dersler where bolumid=(select bolumid from bolum where bolumad='yazılım'));
+-- if Adet>3 then
+-- Raise notice 'ilgili Numaralı bölümde 3ten fazla ders var';
+-- -- if Adet = 3 then
+-- -- Raise notice 'ilgili Numaralı bölümde 3tane  ders var';
+-- else  
+-- Raise notice 'ilgili Numaralı bölümde 3ten az  ders var';
+-- end if;
+-- end $$ 
+
+----------------- CASE ---------------------------------------------
+-- SELECT dersad,bolumid,
+-- 		case 
+-- 			when bolumid=1
+-- 		then 'Yazılım'
+-- 			when bolumid=2
+-- 		then 'Mekatronik'
+-- 			when bolumid=3
+-- 		then 'Elektronik'
+-- 			when bolumid=4
+-- 		then 'Makine'
+-- 	End duration 
+-- 	from dersler
+-- 	order by dersad;
+
+----------------- WHILE ---------------------------------------------
+-- Do $$ 
+-- declare 
+-- 	sayac int:=1;
+-- 	toplam int:=0;
+	
+-- Begin
+-- 	while sayac<=10 loop 
+-- 	Raise Notice 'Sayaç :%',sayac;
+-- 	toplam := toplam + sayac;
+-- 	sayac :=sayac + 1;
+-- 	end loop;
+-- 	raise notice 'Toplam :%',toplam;
+-- end $$
+		
+-- do $$ 
+-- declare 
+-- 	sayac int:=1;
+-- 	toplam int:=0;
+-- 	begin
+-- 		loop 
+-- 			exit when sayac = 5;
+-- 			-- Raise notice 'Merhaba PostgreSQL Dersleri';
+-- 			-- Raise notice 'Sayac:%',sayac;
+-- 			toplam:=toplam + sayac;
+-- 			sayac:=sayac+1;
+			
+-- 		end loop;
+-- 		Raise notice 'Toplam:%',toplam;
+-- end $$
+
+
+-- select pg_sleep(3); 3 saniye sonra alttaki işlemi gerçekleştirir
+-- select * from kitaplar
+----------------- Procedure ---------------------------------------------
+
+-- Procedure
+-- Create procedure deneme()
+-- Create or replace procedure deneme() Güncelleme işlemi böyle yapılır 
+-- language plpgsql
+-- as $$
+-- begin
+-- Raise notice 'PostgreSQL Derslerimiz devam ediyor ';
+-- Raise Notice 'PostgreSQL ikinci satır burası';
+-- end; $$ 
+
+-- call deneme()
+
+-- create PROCEDURE fakulte_ekle(p1 integer,p2 text)
+-- LANGUAGE SQL
+-- As $$
+-- insert into fakulte (id,ad) values(p1,p2);
+-- $$;
+
+
+-- select * from fakulte
+-- call fakulte_ekle(7,'Besyo')
+
+----------------- Fonksiyonlar ---------------------------------------------
+-- Create FUNCTION toplam(s1 int ,s2 int)
+-- returns int 
+-- language plpgsql
+-- as 
+-- $$
+-- declare 
+-- 	sonuc integer;
+-- begin sonuc:=s1+s2;
+-- 	  return sonuc;
+
+-- end;
+-- $$;
+-- select toplam(1,3);
+
+-- Create  function kdvli(fiyat float)
+-- returns float
+-- language plpgsql
+-- as
+-- $$
+-- begin
+-- fiyat:=fiyat*0.08+fiyat;
+-- return fiyat;
+-- end;
+-- $$
+
+-- select ad,yazar,fiyat,kdvli(fiyat ) from kitaplar
+
+-- CREATE FUNCTION KITAPGETIR(PRMT varchar) -- returns table
+-- (
+-- 	idsutun int,
+-- 	kitapadsutun varchar,
+-- 	kitapyazarsutun varchar
+-- )
+-- As
+-- $$
+-- Begin
+-- Return query
+-- select
+-- id,ad,yazar
+-- from kitaplar
+-- where ad like prmt;
+-- end;
+-- $$
+-- LANGUAGE plpgsql;
+
+-- SELECT * from KITAPGETIR('%e%')
+
+
+----------------- Trigger ---------------------------------------------
+
+-- insert into toplamfakulte (sayi) values(8)
+-- select * from fakulte order by id
+
+
+-- Create or Replace function test()
+-- returns trigger
+-- as
+-- $$
+-- begin 
+-- update toplamfakulte set sayi=sayi+1;
+-- return new;
+-- end;
+-- $$
+-- LANGUAGE plpgsql;
+
+-- create trigger testtrig
+-- after insert
+-- on fakulte
+-- for each row
+-- execute procedure test();
+
+-- select * from toplamfakulte
+
+
+-- insert into toplamfakulte2 (sayi) values(0)
+-- Create or replace Function test1()
+--  returns trigger
+--  as 
+--  $$
+--  declare 
+--  uzunluk int;
+--  begin
+--  uzunluk:=(select length(ad) from fakulte order by id desc limit 1);
+--  update toplamfakulte2 set sayi=sayi+uzunluk;
+--  return new;
+--  end;
+--  $$
+--  LANGUAGE plpgsql;
+
+-- Create trigger test1trig
+-- after insert
+-- on fakulte
+-- for each row
+-- execute procedure test1();
+
+-- select * from toplamfakulte2
+-- insert into fakulte ( id,ad) values (15,'Fen Fakültesi')
+
+----------------- IMPORT CSV ---------------------------------------------
+
+-- create table kisilertablosu(
+-- 	id int,
+-- 	ad VARCHAR(50),
+-- 	soyad VARCHAR(50),
+-- 	sehir VARCHAR(50)
+-- )
+-- SELECT * FROM kisilertablosu
+
+-- COPY kisilertablosu
+-- FROM '‪C:\Users\musau\Desktop\kisiler.csv'
+-- DELIMITER ','
+-- CSV HEADER;
+
+----------------- RANDOM KOMUTU ---------------------------------------------
+-- Create or replace FUNCTION randombetween(low int,high int)
+-- returns int as
+-- $$
+-- begin
+-- return floor(random()*(high-low+1)+low);
+-- end;
+-- $$
+-- LANGUAGE 'plpgsql' STRICT;
+
+-- SELECT randombetween(1,10)
+
+----------------- TABLO KOPYALAMA ---------------------------------------------
+-- Create Table new_table as table language datalarla beraber tabloyu kopyalar
+
+-- Create Table new_table2 as table language with no data sadece tabloyu kopyalar herhangi bir data aktarmaz

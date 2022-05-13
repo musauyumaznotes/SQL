@@ -1,0 +1,26 @@
+SQL Veri İşleme Dili (Data Manipulation Language - DML)
+SELECT:Veri Seçmek
+DELETE:VEri Silmek
+UPDATE:Veri Güncellemek
+INSERT:Veri Kaydetmek
+
+---------------------------------------------------------
+SQL Veri Tanımlama Dili (Data Definition Language - DDL)
+CREATE TABLE:Yeni Bir Tablo Oluşturmak
+ALTER TABLE:Tabloda Güncelleme Yapmak
+DROP TABLE:Tabloyu Silmek
+TRUNCATE:Tablo İçindeki Veriyi Siler
+---------------------------------------------------------
+SQL Veri Kontrol Dili (Data Control Language -DCL)
+GRANT:
+DENY:
+REVOKE:
+
+
+---------------------------------------------------------
+Trigger
+Bir Tablo da gerçekleşen sorgu sonucuna göre başka bir sorgunun çalışmasını sağlayan sql komutu
+
+Procedure den farkı kullnıcı tarafından tetiklenmemesidir
+
+Trigger 2 şekilde çalışır ilki ana sorguyu engellemek(instead of),ikincisi birlikte çalışmak(after for)
