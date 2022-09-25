@@ -85,7 +85,7 @@ Select * from Personeller Where PersonelID >= 5
 - <> Eşit Değilse
 - = Eşitse
 - <= Küçük ve Eşitse
-- >= Büyük ve Eşitse
+- [>=] Büyük ve Eşitse
 
 -### Fonksiyon Sonuçlarını Şart Olarak Kullanmak
 ```SQL
