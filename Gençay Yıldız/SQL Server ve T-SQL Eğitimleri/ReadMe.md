@@ -50,9 +50,11 @@ Select * From Satis Detaylari
 Select * From [Satis Detaylari]
 ```
 ### Kolonları Birleştirme
+``` SQL
 Select Adi,SoyAdi from Personeller
 Select Adi + ' ' + SoyAdi [Personel Bilgileri] from Personeller
 ```
+
 ### Farklı Tipte Kolonları Birleştirme
 ```SQL
 Select Adi + ' ' + IseBaslamaTarihi from Personeller -- iki farklı tipteki kolon bu şekilde birleştirilemez
