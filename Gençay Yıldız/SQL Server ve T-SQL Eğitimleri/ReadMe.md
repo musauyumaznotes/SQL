@@ -7,50 +7,58 @@
 - musa = Musa = MuSa
 
 ## 4-) T-SQL Select Komutu
+- Select Komutu  ==> Select istediğimiz verileri bize tablo olarak döndüren bir sorgu çeşididir.
 ```SQL
-USE Northwind
 
--- Select Komutu  ==> Select istedi�imiz verileri bize tablo olarak d�nd�ren bir sorgu �e�ididir.
+USE Northwind
 Select 3
 
 Select 'Musa' -- Tablo olarak geliyor
 print 'Musa' -- Mesaj olarak geliyor
 
-Select 3,5,7 -- verilen de�erleri , ile ay�rd���m�zda bunalr� farkl� kolonlarda bizlere getirecektir.
+Select 3,5,7 -- verilen değerleri , ile ayırdığımızda bunalrı farklı kolonlarda bizlere getirecektir.
 
 Select 'Musa','Uyumaz',23
 
 Select * from Personeller 
 
 Select Adi,SoyAdi from Personeller
+```
 
--- Alias Atama ==> Kolona nitelik/isim atar
-Select 3 as De�er
+### Alias Atama ==> Kolona nitelik/isim atar
+```SQL
+Select 3 as Değer
 
-Select 3 De�er
+Select 3 Değer
 
-Select 'Musa' Ad�, 'Uyumaz' Soyad�
+Select 'Musa' Adı, 'Uyumaz' Soyadı
 
-Select Adi �simler,SoyAdi Soyisimler from Personeller
+Select Adi isimler,SoyAdi Soyisimler from Personeller
+```
+### Boşluk Karakteri Olan Alias Atama
 
--- Bo�luk Karakteri Olan Alias Atama
-Select 1453 �stanbulun Fethi
+```SQL
+Select 1453 İstanbulun Fethi
 
-Select 1453 [�stanbulun Fethi]
+Select 1453 [İstanbulun Fethi]
+```
 
--- Bo�luk Karakteri Olan Tabloyu Sorgulama
+### Boşluk Karakteri Olan Tabloyu Sorgulama
+```SQL
 Select * From Satis Detaylari
 
 Select * From [Satis Detaylari]
-
--- Kolonlar� Birle�tirme
+```
+### Kolonları Birleştirme
 Select Adi,SoyAdi from Personeller
 Select Adi + ' ' + SoyAdi [Personel Bilgileri] from Personeller
-
--- Farkl� Tipte Kolonlar� Birle�tirme
-Select Adi + ' ' + IseBaslamaTarihi from Personeller -- iki farkl� tipteki kolon bu �ekilde birle�tirilemez
+```
+### Farklı Tipte Kolonları Birleştirme
+```SQL
+Select Adi + ' ' + IseBaslamaTarihi from Personeller -- iki farklı tipteki kolon bu şekilde birleştirilemez
 
 Select Adi + ' ' + Convert(nvarchar,IseBaslamaTarihi) from Personeller --Bu iki kolonu birbirine benzetiyoruz.
 
 Select Adi + ' ' + CAST(IseBaslamaTarihi as nvarchar) from Personeller
 ```
+
