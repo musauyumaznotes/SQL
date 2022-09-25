@@ -213,6 +213,226 @@ Select COUNT(Adi) from Personeller
 ```SQL
 Select SUM(NakliyeUcreti) from Satislar
 ```
+# 11-) T-SQL String Fonksiyonları
+- ### STRING FONKSİYONLAR
+- ### LEFT : Soldan(baştan) belirtilen sayıda karakteri getirir.
+```SQL
+Select Left(Adi,2) from Personeller
+```
 
+- ### RIGHT : Sağdan(sondan) belirtilen sayıda karakteri getirir.
+```SQL
+Select Right(Adi,3) from Personeller
+```
 
+- ### UPPER : Büyük harfe çevirir.
+```SQL
+Select UPPER(Adi) from Personeller
+```
 
+- ### LOWER : Küçük harfe çevirir.
+```SQL
+Select LOWER(Adi) from Personeller
+```
+
+- ### SUBSTRING : Belirtilen index'ten itibaren belirtilen sayıda karakteri getir.
+```SQL
+Select SUBSTRING(SoyAdi,3,2) from Personeller
+```
+
+- ### LTRIM : Soldan boşlukları keser.
+```SQL
+Select '                              Musa'
+Select LTRIM('                              Musa')
+```
+
+- ### RTIM : Sağdaki boşlukları keser.
+```SQL
+Select 'UYUMAZ                      '
+Select RTRIM('UYUMAZ                      ')
+```
+
+- ### REVERSE : Tersine çevirir.
+```SQL
+Select REVERSE(Adi) from Personeller
+```
+
+- ### REPLACE : Belirtilen ifadeyi, belirtilen ifade ile değiştirir.
+```SQL
+Select REPLACE('Benim Adım Musa','Musa','KürŞad')
+```
+
+- ### CHARINDEX : Belirtilen karakterin veri içinde sıra numarasını verir
+```SQL
+Select Adi,CHARINDEX('r',Adi) From Personeller
+Select MusteriAdi,CHARINDEX(' ', MusteriAdi) from Musteriler
+```
+
+- ### CHARINDEX Örnek
+```SQL
+-- Müşteriler tablosunun MusteriAdi kolonundan sadece adları çekelim
+Select MusteriAdi From Musteriler
+Select SUBSTRING(MusteriAdi,0,CHARINDEX(' ',MusteriAdi) ) from Musteriler
+
+-- Müşteriler tablosunun MusteriAdi kolonundan sadece soyadları çekelim
+Select SUBSTRING(MusteriAdi,CHARINDEX(' ',MusteriAdi),LEN(MusteriAdi)- (CHARINDEX(' ',MusteriAdi)-1)) from Musteriler
+```
+# 12-) T-SQL Sayısal Değer İşlemleri
+- ### Sayısal Değer İşlemleri
+
+```SQL
+Select 3 + 2
+Select 3 * 3
+Select 4 / 2
+Select 9 - 7
+```
+
+- ### PI : Pi sayısını verir
+```SQL
+Select PI()
+```
+
+- ### SIN : Sinüs alır.
+```SQL
+Select SIN(90)
+```
+
+- ### POWER : Üs alır
+```SQL
+Select POWER(2,3)
+```
+
+- ### ABS : Mutlak değer alır.
+```SQL
+Select ABS(-12)
+```
+
+- ### RAND : 0 - 1 arasında rastgele sayı üretir.
+```SQL
+Select RAND()
+```
+
+- ### FLOOR : Yuvarlama Yapar
+```SQL
+Select FLOOR(RAND()*100)
+SELECT CEILING(RAND()*100)
+```
+
+# 13-) T-SQL Tarih Fonksiyonları
+USE Northwind
+
+- ### Tarih Fonksiyonları
+
+- ### GETDATE : bu günün tarihini verir.
+```SQL
+Select GETDATE()
+```
+
+- ### DATEADD : Verilen tarihe verildiði kadar gün,ay,yýl ekler
+```SQL
+Select DATEADD(DAY,999,GETDATE())
+Select DATEADD(MONTH,999,GETDATE())
+Select DATEADD(YEAR,999,GETDATE())
+```
+
+- ### DATEDIFF : Ýki tarih arasýnda günü,ayý, veya yýlý hesaplar
+```SQL
+Select DATEDIFF(DAY,'02.14.1999',GETDATE())
+Select DATEDIFF(MONTH,'02.14.1999',GETDATE())
+Select DATEDIFF(YEAR,'02.14.1999',GETDATE())
+```
+
+- ### DATEPART : Verilen tarihin haftanýn,ayýn yahut yýlýn kaçýncý günü olduðunu hesaplar.
+```SQL
+Select DATEPART(DW,GETDATE())
+Select DATEPART(MONTH,GETDATE())
+Select DATEPART(DAY,GETDATE())
+```
+# 14-) T-SQL Top Komutu
+- ### Top Komutu : Select komutu neticesinde elde ettiğimiz tablodan ilk kaç kayıtın gösterilmesini istiyorsak TOP komutunu kullanırız
+```SQL
+Select Top 3 * from Personeller
+```
+
+# 15-) T-SQL Distinct Komutu
+- ### Distinct Komutu : Bir kolondaki benzer olan verileri teke indirmemizi sağlayan bir komuttur.
+```SQL
+Select Distinct Sehir from Personeller
+```
+# 16-) T-SQL Group By İşlemi
+- ### Group By => Eğer ki select sorgusunda bir normal kolon bir de ayriyetten aggregate fonksiyonu çağrılıyorsa normal olan kolonu gruplamanız gerekecektir.
+```SQL
+Select * from Urunler 
+
+Select KategoriID , COUNT (*) from Urunler Group By KategoriID -- => KategoriID'deki benzer olan verileri gruplayıp/paketleyip bu verilere karşılık gelen eleman sayısını sonuçlarını karşılarına yazarsam hgaliyle istediğim sonucu elde etmiş olacağım.
+
+Select PersonelID,SUM(NakliyeUcreti) from Satislar Group By PersonelID
+```
+- ### Group By İşleminde Where Şartı Kullanma
+```SQL
+Select * from Urunler
+
+Select KategoriID,COUNT(*) from Urunler Where KategoriID > 5 Group By KategoriID 
+
+Select PersonelID,COUNT(*) from Satislar  Where PersonelID < 4 Group By PersonelID
+
+Select PersonelID,SUM(NakliyeUcreti) from Satislar Group By PersonelID
+```
+
+# 18-) T-SQL Having Komutu
+- ### Group By İşleminde Having komutunu Kullanarak Şart Oluşturma  => Where noraml kolonlar üzerinde şart uygulayacaksak kullandığımız şart komutudur lakin Having Aggregate fonksiyonu üzerinde şart uygulayacaksak kullandığımız bir komuttur.
+```SQL
+Select * from Urunler
+
+Select KategoriID,COUNT(*) from Urunler Where KategoriID > 5 Group by KategoriID Having COUNT(*) > 6
+
+Select PersonelID,COUNT(*) from Satislar Where PersonelID < 4 Group By PersonelID
+
+Select PersonelID,SUM(NakliyeUcreti) from Satislar Group By PersonelID
+```
+
+# 19-) T-SQL Tabloları Yan Yana Birleştirme
+- ### Tabloları Yan Yana Birleştirme
+```SQL
+Select * from Personeller
+Select * from Satislar
+
+Select * from Personeller p,Satislar s Where p.PersonelID = s.PersonelID
+```
+
+# 20-) T-SQL Inner Join'de İki Tabloyu Birleştirme
+- ### Inner Join => Birden fazla tabloyu ilişkisel kolonlar aracılığıyla birleştirip tek bir tablo haline getiren bir yapıdır.
+
+- ### Genel Mantık 
+- Select * from Tablo1 Inner Join Tablo2  on Tablo1.IlişkiliKolon = Tablo2.IlişkiliKolon
+
+- ### Tablolara alias tanımlanabilir
+- Select * from Tablo1 t1 Inner Join Tablo2 t2  on t1.IlişkiliKolon = t2.IlişkiliKolon
+
+- ### İki Tabloyu İlişkisel Birleştirme
+```SQL
+-- Hangi personel hangi satışları yapmıştır (Personeller, Satışlar)
+Select * from Personeller p Inner Join  Satislar s On s.PersonelID = p.PersonelID
+
+-- Hangi ürün hangi kategoride (Urunler, Kategoriler)
+Select u.UrunAdi,k.KategoriAdi from Urunler u Inner Join Kategoriler k on k.KategoriID = u.KategoriID
+```
+
+- ### Where komutunun kullanımı
+```SQL
+-- Beverages kategorisindeki ürünlerim (Urunler, Kategoriler)
+Select u.UrunAdi from Urunler u Inner Join Kategoriler k on k.KategoriID = u.KategoriID Where k.KategoriAdi = 'Beverages'
+
+-- Beverages kategorisindeki ürünlerimin sayısı kaçtır (Urunler, Kategoriler)
+Select COUNT(u.UrunAdi) from Urunler u Inner Join Kategoriler k on k.KategoriID = u.KategoriID Where k.KategoriAdi = 'Beverages'
+
+-- Seafood kategorisindeki ürünlerin listesi (Urunler, Kategoriler)
+Select u.UrunAdi from Urunler u Inner Join Kategoriler k on k.KategoriID = u.KategoriID Where k.KategoriAdi = 'Seafood'
+
+-- Hangi satışı hangi çalışanım yapmış (Satislar Personeller)
+Select s.SatisID,p.Adi + ' ' + p.SoyAdi  from Satislar s inner join Personeller p on p.PersonelID = s.PersonelID 
+
+-- Faks numarası null olmayan tedarikçilerden alınmış ürünler nelerdir? ( Urunler, Tedarikçiler)
+Select * from Urunler u inner join Tedarikciler t on t.TedarikciID = u.TedarikciID Where t.Faks <> 'Null'
+Select * from Urunler u inner join Tedarikciler t on t.TedarikciID = u.TedarikciID Where t.Faks is not null
+```
