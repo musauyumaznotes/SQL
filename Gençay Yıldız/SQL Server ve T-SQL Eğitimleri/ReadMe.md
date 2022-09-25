@@ -61,17 +61,17 @@ Select * from Personeller Where Sehir = 'London'
 -- Personeller tablosunda bağlı çalıştığı kişi sayısı 5'ten küçük olanları listeleyelim
 Select * from Personeller Where BagliCalistigiKisi < 5
 ```
--### And Operatör
+- ### And Operatör
 ```SQL
 -- Personeller tablosunda şehri London ve ülkesi UK olanları listeleyelim.
 Select * from Personeller Where Sehir = 'London' and Ulke ='UK'
 ```
--### Or Operatörü
+- ### Or Operatörü
 ```SQL
 -- Personeller tablosunda UnvanEki 'Mr.' olan veya şehri Seattle olan tüm personelleri listeleyelim
 Select * from Personeller Where UnvanEki ='Mr.' Or Sehir = 'Seattle'
 ```
--### Karşık Örnekler
+- ### Karşık Örnekler
 ```SQL
 -- Adı Robert Soyadı King olan personelin tüm bilgilerini çek.
 Select * from Personeller Where Adi = 'Robert' and SoyAdi ='King'
@@ -87,7 +87,7 @@ Select * from Personeller Where PersonelID >= 5
 - <= Küçük ve Eşitse
 - [>=] Büyük ve Eşitse
 
--### Fonksiyon Sonuçlarını Şart Olarak Kullanmak
+- ### Fonksiyon Sonuçlarını Şart Olarak Kullanmak
 ```SQL
 -- 1993 yılında işe başlayanları listele
 Select * from Personeller Where YEAR(IseBaslamaTarihi) = 1993
@@ -105,9 +105,73 @@ Select * from Personeller Where YEAR(DogumTarihi) > 1950 and YEAR(DogumTarihi) <
 Select Adi from Personeller Where Sehir = 'London' or Sehir = 'Tacoma' or Sehir = 'Kirkland'
 ```
 
+# 6-) T-SQL Where Komutunda Between Komutunun Kullanımı
+- ### Between Komutu =>Eğer ki where şartı belirli bir değer aralığını belirtecekse yani şartımız belirli bir değer aralığı olacaksa between komutunu kullanıp daha pratik bir şekilde şartımızı oluşturabiliriz.
 
+```SQL
+-- Doğum yılı 1950 ile 1965 yılları arasında olan personelleri getirelim.
+Select * from Personeller Where YEAR(DogumTarihi) between 1950 and 1965
+```
+# 7-) T-SQL Where Komutunda In Komutunun Kullanımı
+- ### In Komutu => Or komutuyla belirttiğimiz şartları biz In komutu ile daha pratik bir şekilde gerçekleştirmekteyiz
 
+```SQL
+-- Yaşadığı şehrin London,Tacoma ve Kirkland olan personellerin adını listeleyelim.
+Select Adi from Personeller Where Sehir In('London','Tacoma','Kirkland')
+```
+# 8-) T-SQL Like Sorguları
+- ### Like Sorguları =>Kolonlar içindeki Verilere belirli şartlarımızı koyabiliriz.
 
+- ### %(Genel Önemli Değil) Operatörü => Aradığımız kriterin dışındakileri ifade edebiliyoruz.
+```SQL
+-- İsminin baş harfi j olan personellerin adını ve soyadını yazdıralım.
+Select Adi,SoyAdi from Personeller Where Adi Like 'j%' -- => ilk harfi j olan gerisi önemli/mühim olmayan 
 
+-- İsminin son harfi y olan personellerin adını ve soyadını yazdıralım.
+Select Adi,SoyAdi from Personeller Where Adi Like '%y'
 
+-- İsminin son üç harfi ert olan personeli getirelim
+Select * from Personeller Where Adi Like '%ert'
 
+-- İsminin ilk harfi r son harfi t olan personeli getirelim.
+Select Adi,SoyAdi from Personeller Where Adi Like 'r%t' 
+-- Gereksiz bir kullanım.
+Select Adi,SoyAdi from Personeller Where Adi Like 'r%' and Adi Like '%t'
+
+-- İsminde an geçen personelin adını yazdıralım.
+Select Adi From Personeller Where Adi Like '%an%'
+
+-- isminin baş harfi n olan ve içerisinde an geçen personeli getirelim.
+Select * From Personeller Where Adi Like 'n%an%'
+-- Gereksiz bir kullanım
+Select * From Personeller Where Adi Like 'n%' and Adi Like '%an%'
+```
+- ### _ (Özel Önemli Değil) Operatörü => Bu operatörü kullandığımız karakter o anki karakterin önemli olmadığını belirtir.
+```SQL
+-- İsminin ilk harfi a,ikinci harfi fark etmez ve üçüncü harfi d olan personeli getirelim.
+Select * From Personeller Where Adi Like 'a_d%' -- => ilk harfi a ikinci harfi fark etmez üçüncü harfi d olan ve bundan sonrası fark etmeyen değer.
+
+-- İsminin ilk harfi m,ikinci-üçüncü-dördüncü fark etmez ve beşinci harfi a olan personeli getirelim.
+Select * From Personeller Where Adi Like 'm___a%'
+```
+- ### [] (ya da operatörü)
+```SQL
+-- İsminin ilk harfi n ya da m ya da r olan personelleri getirelim.
+Select * from Personeller Where Adi Like '[nmr]%'
+
+-- İsminin içerisinde a ya da i geçen personelleri getirelim.
+Select * from Personeller Where Adi Like '%[ai]%'
+```
+- ### [*-*] (Alfabetik Arasında) Operatörü *=> belirli harfleri belirlemekte
+```SQL
+-- İsminin baş harfi a ile k arasında alfabetik sıraya göre herahngi bir harf olan personellerin adını yazdıralım
+Select Adi From Personeller Where Adi Like '[a-k]%'
+```
+- ### [ ^* ] (Değil) Operatörü
+```SQL
+-- İsminin baş harfi a olmayan personelleri getirelim.
+Select * from Personeller Where Adi Like '[^a]%'
+
+-- İsminin baş harfi an olmayan personelleri getirelim.
+Select * from Personeller Where Adi Like '[^an]%'
+```
