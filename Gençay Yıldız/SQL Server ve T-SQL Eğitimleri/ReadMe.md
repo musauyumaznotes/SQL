@@ -25,7 +25,7 @@ Select * from Personeller
 Select Adi,SoyAdi from Personeller
 ```
 
-### Alias Atama ==> Kolona nitelik/isim atar
+- ### Alias Atama ==> Kolona nitelik/isim atar
 ```SQL
 Select 3 as Değer
 
@@ -35,7 +35,7 @@ Select 'Musa' Adı, 'Uyumaz' Soyadı
 
 Select Adi isimler,SoyAdi Soyisimler from Personeller
 ```
-### Boşluk Karakteri Olan Alias Atama
+- ### Boşluk Karakteri Olan Alias Atama
 
 ```SQL
 Select 1453 İstanbulun Fethi
@@ -43,19 +43,19 @@ Select 1453 İstanbulun Fethi
 Select 1453 [İstanbulun Fethi]
 ```
 
-### Boşluk Karakteri Olan Tabloyu Sorgulama
+- ### Boşluk Karakteri Olan Tabloyu Sorgulama
 ```SQL
 Select * From Satis Detaylari
 
 Select * From [Satis Detaylari]
 ```
-### Kolonları Birleştirme
+- ### Kolonları Birleştirme
 ``` SQL
 Select Adi,SoyAdi from Personeller
 Select Adi + ' ' + SoyAdi [Personel Bilgileri] from Personeller
 ```
 
-### Farklı Tipte Kolonları Birleştirme
+- ### Farklı Tipte Kolonları Birleştirme
 ```SQL
 Select Adi + ' ' + IseBaslamaTarihi from Personeller -- iki farklı tipteki kolon bu şekilde birleştirilemez
 
