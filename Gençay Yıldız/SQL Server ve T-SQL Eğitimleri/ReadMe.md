@@ -1,4 +1,4 @@
-##  3-) T-SQL Özellikleri ve Use Komutu
+# 3-) T-SQL Özellikleri ve Use Komutu
 
 - Transact SQL(T-SQL) Dili Özellikleri
 - Yorum Satırı -- ifadesidir.
@@ -6,7 +6,7 @@
 - T-SQL büyük küçük harf duyarlılığına sahip bir dil değildir.
 - musa = Musa = MuSa
 
-## 4-) T-SQL Select Komutu
+# 4-) T-SQL Select Komutu
 - Select Komutu  ==> Select istediğimiz verileri bize tablo olarak döndüren bir sorgu çeşididir.
 ```SQL
 
