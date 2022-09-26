@@ -510,5 +510,162 @@ Where p.Adi Like '%a%' And s.SatisID > 10500
 Group By s.SatisTarihi 
 ```
 
+# 24-) T-SQL Outer Join(Left, Right, Full) İle Tabloları Birleştirme
 
+- ### Outer Join
 
+- Inner Join'de eşleşen kayıtlar getiriliyordu. Outer Join'de ise eşleşmeyen kayıtlarda getirilmektedir.
+
+- ### Left Join
+- Join ifadesinin solundaki tablodan tüm kayıtları getirir. Sağındaki tablodan eşleşenleri yan yana eşleşmeyenleri null olarak getirir.
+```SQL
+Select * from Oyuncular o Left Outer Join Filmler f on o.FilmId = f.FilmId
+Select * from Filmler f Left Outer Join Oyuncular o on o.FilmId = f.FilmId
+```
+- ### veya
+```SQL
+Select * from Oyuncular o Left Join Filmler f on o.FilmId = f.FilmId
+Select * from Filmler f Left Join Oyuncular o on o.FilmId = f.FilmId
+```
+
+- ### Right Join
+- joinin sağındaki tablonun tamamını getirecek, solundakinden eşleşenleri aynı satırda eşleşmeyenleri de null olarak getirecek.
+```SQL
+Select * from Oyuncular o Right Outer Join Filmler f on o.FilmId = f.FilmId
+Select * from Filmler f Right Outer Join Oyuncular o on o.FilmId = f.FilmId
+```
+- ### veya
+```SQL
+Select * from Oyuncular o Right Join Filmler f on o.FilmId = f.FilmId
+```
+
+- ### Full Join
+- Joinin iki tarafındaki tablolardan eşleşen eşleşmeyen hepsini getirir.
+```SQL
+Select * from Oyuncular o Full outer Join Filmler f on f.FilmId = o.FilmId
+```
+- ### veya
+```SQL
+Select * from Oyuncular o Full Join Filmler f on f.FilmId = o.FilmId
+```
+
+# 25-) T-SQL Cross Join İle Tablo Birleştirme
+- ### Cross join => İki tablo arasında kartezyen çarpımı yapan bir yapıdır. iki küme arasındaki elemanları tek tek eşleştirir 
+- ### Cross Join'e(Where) şart bildirilemez
+```SQL
+Select COUNT(*) from Personeller
+Select COUNT(*) from Bolge
+
+Select p.Adi,b.BolgeID  from Personeller p Cross Join Bolge b
+```
+
+# 26-) T-SQL DML Giriş
+- ### DML (Data Manipulation Language)
+
+- ### Select, Insert, Update, Delete
+- ### Select ...
+- ### Insert ...
+- ### Update ...
+- ### Delete ...
+
+- ### Select 
+```SQL
+Select * from Personeller
+```
+
+# 27-) T-SQL DML Insert Komutu 1
+- ### DML (Data Manipulation Language)
+
+- ### Insert 
+- ### Insert [Tablo Adı](Kolonlar) Values(Değerler)
+```SQL
+Insert Personeller(Adi,SoyAdi) Values('Musa','Uyumaz')
+Insert Personeller Values('Uyumaz','Musa','Yazılım Veritabanı Geliştirici','YM','14.02.1999',GETDATE(),'Eskişehir','Eskişehir','İç Anadolu','26600','Türkiye','02221111111',null,null,null,null)
+```
+
+- ### [Dikkat Edilmesi Gerekenler!!!]
+- ### Into Komutu ile Yazılabilir
+```SQL
+Insert Into Personeller(Adi,SoyAdi) Values('Musa','Uyumaz')
+```
+- ### Kolonun kabul ettiği veri tipi ve karakter uzunluğunda kayıt yapılmalıdır.
+- ### Not Null olan kolonlara boş bırakılamayacaklarından dolayı mutlaka değer gönderilmelidir.
+```SQL
+Insert Personeller(Adi,SoyAdi,Unvan,UnvanEki) Values('','','a','b')
+```
+- ### Otomatik artan(identity) kolonlara değer gönderilmez.
+- ### Tablodaki seçilen yahut bütün kolonlara değer gönderileceği belirtilip, gönderilmezse hata verecektir.
+```SQL
+Insert Into Personeller(Adi,SoyAdi) Values('Musa')
+Insert Into Personeller Values('Musa')
+```
+
+- ### [Pratik Kullanım]
+```SQL
+Insert Musteriler(MusteriAdi,Adres) Values('Hilmi','Çorum')
+Insert Musteriler(MusteriAdi,Adres) Values('Necati','Çankırı')
+Insert Musteriler(MusteriAdi,Adres) Values('Rıfkı','Yozgat')
+
+Insert Musteriler(MusteriAdi,Adres) Values('Hilmi','Çorum'),
+										                      ('Necati','Çankırı'),
+										                      ('Rıfkı','Yozgat')
+```
+
+# 28-) T-SQL DML Insert Komutu 2
+- ### [Insert Komutu İle Select Sorgusu Sonucu Gelen Verileri Farklı Tabloya Kaydetme]
+```SQL
+Insert OrnekPersoneller Select Adi,SoyAdi from Personeller
+```
+- ### Bruada dikkat etmemiz gereken nokta; Select sorgusunda dönen kolon sayısı ile Insert işlemş yapılacak tablonun kolon sayısı birbirine eşit olması gerekmektedir.
+
+- ### [Select Sorgusu Sonucu Gelen Verileri Farklı Bir Tablo Oluşturarak Kaydetme]
+```SQL
+Select Adi,SoyAdi,ulke into OrnekPersoneller2 from Personeller
+```
+- ### Bu yöntemle primary key ve foreign keyler oluşturulamazlar.
+
+# 29-) T-SQL DML Update Komutu
+- ### DML (Data Manipulation Language)
+
+- ### Update
+- ### Update [Tablo Adı] Set [Kolon Adı] = Değer
+```SQL
+Update OrnekPersoneller Set Adi = 'Mehmet'
+```
+- ### [Update Sorgusuna Where Þartý Yazmak]
+```SQL
+Update OrnekPersoneller Set Adi = 'Mehmet' Where Adi = 'Nancy'
+Update OrnekPersoneller Set Adi = 'Ayþe' Where SoyAdi = 'Davolio'
+```
+
+- ### [Update Sorgusunda Join Yapýlarýný Kullanarak Birden Fazla Tabloda Güncelleme Yapmak]
+```SQL
+Update Urunler Set UrunAdi = k.KategoriAdi from Urunler u Inner Join Kategoriler k on u.KategoriID = k.KategoriID
+```
+
+- ### [Update Sorgusunda Subquery Ýle Güncelleme Yapmak]
+```SQL
+Update Urunler Set UrunAdi = (Select Adi from Personeller Where PersonelID = 3)
+```
+
+- ### [Update Sorgusunda Top Keywordü Ýle Güncelleme Yapmak]
+```SQL
+Update Top(30) urunler Set UrunAdi = 'x' 
+```
+
+# 30-) T-SQL DML Delete Komutu
+- ### DML (Data Manipulation Language)
+
+- ### Delete
+- ### Delete From [Tablo Adı]
+```SQL
+Delete from Urunler
+```
+
+- ### [Delete Sorgusunda Where Şartı Yazmak]
+```SQL
+Delete From Urunler Where KategoriID < 3
+```
+
+- ### [Dikkat Edilmesi Gerekenler!!!]
+- ### Delete sorgusuyla tablo içerisindeki tüm verileri silmeniz identity kolonunu sıfırlamayacaktır. Silme işleminden sonra ilk eklenen veride kalındığı yerden id değeri verilecektir.
