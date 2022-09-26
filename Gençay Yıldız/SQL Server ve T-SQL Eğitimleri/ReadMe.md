@@ -436,3 +436,47 @@ Select s.SatisID,p.Adi + ' ' + p.SoyAdi  from Satislar s inner join Personeller 
 Select * from Urunler u inner join Tedarikciler t on t.TedarikciID = u.TedarikciID Where t.Faks <> 'Null'
 Select * from Urunler u inner join Tedarikciler t on t.TedarikciID = u.TedarikciID Where t.Faks is not null
 ```
+
+# 21-) T-SQL Inner Join'de İkiden Fazla Tabloyu Birleştirme
+
+-### Inner Join
+
+- ### İkidem Fazla Tabloyu İlişkisel Birleştirme
+```SQL
+-- 1997 yılından sonra Nancy'nin satış yaptığı firmaların isimleri: (1997 dahil) (Musteriler,Satislar,Personeller)
+Select * from Personeller p inner join Satislar s on s.PersonelID = p.PersonelID inner join Musteriler m on m.MusteriID = s.MusteriID Where p.Adi = 'Nancy' and YEAR(s.SatisTarihi) > 1997
+
+-- Limited olan tedarikçilerden alınmış seafood kategorisindeki ürünlerimin toplam satış tutarı. (Urunler,Kategoriler,Tedarikçiler)
+Select SUM(u.HedefStokDuzeyi * u.BirimFiyati) from Urunler u Inner join Kategoriler k on k.KategoriID = u.KategoriID inner join Tedarikciler t on t.TedarikciID = u.TedarikciID Where t.SirketAdi like '%Ltd.%' and k.KategoriAdi = 'Seafood'
+```
+
+- ### Aynı Tabloyu İlişkisel Olarak Bileştirme
+```SQL
+-- Personellerimin bağlı olarak çalıştığı kişileri listele (Personeller,Personeller)
+Select p1.Adi,p2.Adi from Personeller p1 Inner join Personeller p2 on p1.BagliCalistigiKisi = p2.PersonelID
+```
+
+# 23-) T-SQL Inner Join'de Group By İşlemi
+
+- ### Inner Join
+
+- ### Inner Joinde Group By
+```SQL
+--Hangi personelim(adı ve soyadı ile birlikte), toplam kaç adetlik satış yapmış Satış adedi 100'den fazla olanlar ve personelin adının baş harfi M olan kayıtlar gelsin. (Personeller,Satislar)
+Select (p.Adi +' '+ p.SoyAdi),COUNT(s.SatisID) from Personeller p inner join Satislar s on s.PersonelID = p.PersonelID Where p.Adi like 'M%' Group By (p.Adi +' '+ p.SoyAdi) having COUNT(s.SatisID) > 100
+
+-- Seafood kategorisindeki ürünlerin sayısı? (Urunler Kategoriler)
+Select k.KategoriAdi,COUNT(*) from Urunler u inner join Kategoriler k on k.KategoriID = u.KategoriID Where k.KategoriAdi = 'Seafood' Group by k.KategoriAdi 
+
+--Hangi Personelim Toplam Kaç adet Satış Yapmış? (Personeller Satislar)
+Select p.Adi,COUNT(s.SatisID) from Personeller p inner join Satislar s on p.PersonelID = s.PersonelID Group by p.Adi
+
+-- En çok satış yapan personelim (Personeller Satislar)
+Select top 1 p.Adi,COUNT(s.SatisID) from Personeller p inner join Satislar s on p.PersonelID = s.PersonelID Group by p.Adi Order By COUNT(s.SatisID) desc
+
+-- Adında "a" harfi olan personellerin satış id'si 10500 den büyük olan satışlarının toplam tutarını(miktar * birim fiyat) ve bu satışların hangi tarihte gerçekleştiğini listele (Personeller Satislar [Satis Detaylari])
+Select SUM(sd.Miktar * sd.BirimFiyati),s.SatisTarihi from Personeller p inner join Satislar s on s.PersonelID = p.PersonelID inner join [Satis Detaylari] sd on sd.SatisID = s.SatisID Where p.Adi Like '%a%' And s.SatisID > 10500 Group By s.SatisTarihi 
+```
+
+
+
