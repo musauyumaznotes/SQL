@@ -1,3 +1,7 @@
+***
+# [Bu notları Gençay Yıldız hocamın sayesinde izlediğim bu playlistten öğrendim.](https://www.youtube.com/playlist?list=PLQVXoXFVVtp2RjHt5teaBOLUcKbq2Ilbo)  Herkesin izlemesini tavsiye ederim. Mükemmel bir anlatım. Böyle mükemmel bir içerikli [Türkçe kaynağı](https://www.youtube.com/c/Gen%C3%A7ayY%C4%B1ld%C4%B1z) hiçbir yerde bulamazsınız.
+***
+
 # 3-) T-SQL Özellikleri ve Use Komutu
 
 - Transact SQL(T-SQL) Dili Özellikleri
