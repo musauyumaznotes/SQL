@@ -722,3 +722,440 @@ Union All
 Select Adi,SoyAdi from Personeller
 ```
 
+# 33-) T-SQL With Rollup Komutu
+- ### With Rollup
+- ### Group By ile grupanmýþ veri kümesinde ara toplam alýnmasýný saðlar.
+
+```SQL
+Select SatisID,UrunID,SUM(Miktar) from [Satis Detaylari]
+Group By SatisID,UrunID With Rollup
+
+Select KategoriID,UrunID,SUM(TedarikciID) from Urunler Group By KategoriID,UrunID With Rollup
+
+-- [Having Şartıyla Beraber With Rollup]
+Select SatisID,UrunID,SUM(Miktar) from [Satis Detaylari]
+Group By SatisID,UrunID With Rollup Having SUM(Miktar) > 100
+```
+
+# 34-) T-SQL With Cube Komutu
+- ### With Cube 
+- ### Group by ile gruplanmýþ veri kümesinde teker teker toplam alýnmasýný saðlar
+
+```SQL
+Select SatisID,UrunID,SUM(Miktar) from [Satis Detaylari]
+Group By SatisID,UrunID With Cube
+
+Select KategoriID,UrunID,SUM(TedarikciID) from Urunler Group By KategoriID,UrunID With Cube
+
+-- [Having Şartıyla Beraber With Cube]
+Select SatisID,UrunID,SUM(Miktar) from [Satis Detaylari]
+Group By SatisID,UrunID With Cube Having SUM(Miktar) > 100
+```
+
+# 35-) T-SQL Case When Then Else End Kalıbı
+- ### Case - When - Else - End => Sorgularda şart kalıbı olarak kullanırız
+
+```SQL
+-- Personellerimizin isim ve soyisimlerinin yanına UnvanEki 'Mr.' ise 'Erkek' , 'Ms.' ise 'Kadın' yazsın
+Select Adi,SoyAdi,UnvanEki from Personeller
+
+Select 
+Adi,SoyAdi,
+Case 
+When UnvanEki = 'Mrs.' or UnvanEki = 'Ms.' Then 'Kadın'
+When UnvanEki = 'Mr.' Then 'Erkek'
+Else UnvanEki
+End
+from Personeller
+
+-- Eğer ürünün birim fiyatı 0 - 50 arası ise 'Çin Malı',50 - 100 arası ise 'Ucuz', 100 - 200 arası ise 'Normal' ve 200'den fazla ise 'Pahalı' yazsın
+
+Select 
+UrunID,
+Case
+When BirimFiyati Between 0 and 50 Then 'Çin Malı'
+When BirimFiyati Between 50 and 100 Then 'Ucuz'
+When BirimFiyati Between 100 and 200 Then 'Normal'
+When BirimFiyati > 200 Then 'Pahalı'
+else 
+'Belirsiz'
+End
+from Urunler
+```
+# 36-) T-SQL With Ties Komutu
+- ### With Ties Komutu
+
+```SQL
+Select * from [Satis Detaylari]
+
+Select top 6 with ties * from [Satis Detaylari] Order By SatisID
+```
+
+# 37-) T-SQL With Yapısı
+- ### With Komutu
+
+``` SQL
+With PersonelSatis(id,adi,soyadi,satisid)
+as
+(
+Select p.PersonelID,Adi,SoyAdi,SatisID from Personeller p inner join Satislar s on p.PersonelID = s.PersonelID
+)
+Select * from PersonelSatis ps inner join [Satis Detaylari] sd on sd.SatisID = ps.satisid
+```
+
+# 38-) T-SQL Subquery
+- ### Subquery (İç İçe Sorgular)
+- ### Dikkat etmemiz gereken tek þart sub/içerideki olan sorgunun geriye döneceði satýr sadece bir tane olmak zorunda
+
+```SQL
+Select s.SatisID,s.SatisTarihi from Personeller p inner join Satislar s on s.PersonelID = p.PersonelID Where Adi = 'Nancy'
+
+Select SatisID,SatisTarihi from Satislar Where PersonelID = (Select PersonelID from Personeller Where Adi = 'Nancy')
+
+Select * from Personeller Where Adi =(Select Adi from Personeller p Where UnvanEki = 'Dr.')
+```
+
+# 39-) T-SQL Bulk Insert
+-- Bulk Insert
+
+```SQL
+Bulk Insert Kisiler
+From 'D:\Kisiler.txt'
+With
+(
+	Fieldterminator = '\t', -- Kolonları ayıracak özellik '\t'=> tab komutunu işaret etmektedir.
+	RowTerminator = '\n'-- Satırları ayıracak özellik '\n' => satır komutunu işaret etmektedir.
+)
+
+Select * from Kisiler
+```
+
+# 40-) T-SQL Truncate Table Komutu
+- ### Truncate Komutu =>Herhangi bir tablonun tüm verilerini silmemizi sağlayan ve bu işlem sırasında identity column'unu sıfırlayan komuttur.
+
+```SQL
+Delete From PersonellerX
+
+Truncate Table PersonellerX
+```
+
+# 41-) T-SQL @@Identity Komutu
+- ### @@Identity Komutu =>İlgili veritabanı içerisinde yapılan En son Insert işleminin identity değerini bizlere getirir
+
+```SQL
+Insert Kategoriler(KategoriAdi,Tanimi) Values('X','X Kategorisi')
+
+Select @@IDENTITY
+
+Insert Personeller(Adi,SoyAdi) Values('Ela','Elif')
+Select @@IDENTITY
+```
+
+# 42-) T-SQL @@Rowcount Komutu
+-- @@Rowcount Komutu İşlem neticesinde etkilenen eleman sayısı
+
+```SQL
+
+Delete from PersonellerX Where SoyAdi = 'Gençay'
+Select @@ROWCOUNT
+
+Select * from Personeller
+Select @@ROWCOUNT
+
+Insert PersonellerX(Adi,SoyAdi) Values ('Gençay','Yıldız'),
+					('Ahmet','Uslu'),
+					('Aslı','Güngör')
+```
+
+# 43-) T-SQL DBCC Checkident Fonksiyonu İle Identity Kolonuna Müdahale Etme
+- ### Identity Kolonuna Müdahale Etme
+
+```SQL
+DBCC Checkident(PersonellerX,reseed,27)
+```
+
+# 44-) T-SQL Null Değer Kontrolü
+- ### Null Kontrol Mekanizmaları
+
+- ### Case-When-Then-Else-End Kalıbı İle Null Kontrolü
+```SQL
+Select MusteriAdi,Bolge From Musteriler
+
+Select MusteriAdi,
+Case
+	When Bolge Is Null Then 'Bölge Bilinmiyor'
+	Else
+	Bolge
+end
+from Musteriler
+```
+
+# 45-) T-SQL Coalesce Fonksiyonu İle Null Değer Kontrolü
+- ### Coalesce Fonksiyonu İle Null Kontrolü
+```SQL
+Select MusteriAdi,Coalesce(Bolge,'Bolge Bilinmiyor') from Musteriler
+```
+
+# 46-) T-SQL IsNull Fonksiyonu İle Null Değer Kontrolü
+- ### IsNull Fonksiyonu İle Null Kontrolü
+```SQL
+Select MusteriAdi,ISNULL(Bolge,'Bölge Bilinmiyor') from Musteriler
+```
+
+# 47-) T-SQL NullIf Fonksiyonu İle Null Değer Kontrolü
+- ### NullIf Fonksiyonu ile Null Kontrolü
+- ### Fonksiyona verilen kolon, ikinici parametre verilen değere eşit ise o kolonu Null olarak getirir.
+
+```SQL
+Select NullIf(0,2)
+
+Select HedefStokDuzeyi from Urunler
+Select AVG(HedefStokDuzeyi) from Urunler
+
+-- Hedef stok düzeyi 0 olmayan ürünlerin ortalaması kaçtır?
+Select AVG(HedefStokDuzeyi) from Urunler Where HedefStokDuzeyi <> 0
+
+Select AVG(NullIf(HedefStokDuzeyi,0)) from Urunler 
+```
+
+# 48-) T-SQL İle Veritabanındaki Tabloları Listeleme
+- ### T-SQL İle Veritabanındaki Tabloları Listeleme
+
+```SQL
+Select * from sys.tables
+-- ya da
+Select * from sysobjects Where xtype = 'U'
+```
+
+# 49-) T-SQL Bir Tablonun Primary Key Olup Olmadığını Kontrol Etme
+- ### Bir tablonun Primary Key Olup Olmadığını Kontrol Etme
+
+```SQL
+Select OBJECTPROPERTY(OBJECT_ID('Personeller'),'TableHasPrimaryKey')
+```
+
+50-) T-SQL DDL Giriş
+- ### DDL (Data Definition Language)
+- ### T-SQL de veritabanı nesneleri yaratmamızı sağlayan ve bu nesneler üzerinde değişiklikler yapmamızı ve silmemizi sağlayan yapılar bu başlık altında simgelenmektedir
+
+- ### Create, Alter, Drop
+
+# 51-) T-SQL DDL Create Komutu
+- ### Create İle Database Oluşturma
+```SQL
+Create Database OrnekVeritabani
+```
+- ### Bu şekilde bir kullanım varsayılan ayarlarda veritabanı oluşturacaktır.
+
+```SQL
+
+
+Create Database OrnekVeritabani
+On
+(
+Name = 'GG',
+Filename = 'D:\GG.mdf',
+Size = 5,
+Filegrowth = 3
+)
+-- Name : Oluşturulacak veritabanının fiziksel ismini belirtiyoruz.
+-- Filename : Oluşturulacak veritabanı fiziksel dizinini belirtiyoruz.
+-- Size : Veritabanının başlangıç boyutunu mb cinsinden ayarlıyoruz.
+-- Filegrowth : Veritabanının boyutu, başlangıç boyutunu geçtiği durumda boyutun ne kadar artması gerektiğini mb cinsinden belirtiyoruz.
+```
+
+# 53-) T-SQL DDL Create Komutu İle Database Log Dosyası Oluşturma
+- ### Create İle Log Dosyasıyla Birlikte Database Oluşturma
+```SQL
+Create Database OrnekVeritabani
+On
+(
+Name = 'GG',
+Filename = 'D:\GG.mdf',
+Size = 5,
+Filegrowth = 3
+)
+Log 
+On
+(
+Name = 'GG_LOG',
+Filename = 'D:\GG.ldf',
+Size = 5,
+Filegrowth = 3
+)
+```
+
+# 54-) T-SQL DDL Create Komutu İle Table Oluşturma
+- ### Create İle Tablo Oluşturma
+```SQL
+Use OrnekVeritabani
+Create Table OrnekTablo
+(
+Kolon1 int,
+Kolon2 nvarchar(MAX),
+Kolon3 money
+)
+```
+
+- ### Eğer kolon adlarında boşluk varsa köşeli parantez ile belirtilmelidir.
+Create Table OrnekTablo2
+(
+[Kolon 1] int,
+[Kolon 2] nvarchar(MAX),
+[Kolon 3] money
+)
+
+# 55-) T-SQL DDL Create Komutu İle Tablonun Kolonuna Primary Key ve Identity Özellikleri Verme
+- ### Kolona Primary Key ve Identity Özelliği Kazandırmak
+```SQL
+Create Table OrnekTablo3
+(
+Id int Primary Key Identity(1,1),
+Kolon2 nvarchar(MAX),
+Kolon3 money
+)
+```
+
+# 56-) T-SQL DDL Alter Komutu
+- ### ===ALTER===
+- ### Create ile oluşturulan veritabanı nesnelerinde değişiklik yapmamızı sağlar.
+
+- ### Prototip
+- ### Alter [Nesne] [Nesnenin Adı]
+- ### (Yapıya Göre İşlemler)
+
+# 57-) T-SQL DDL Alter Komutu İle Database Güncelleme
+- ### =Alter İle Database Güncelleme
+```SQL
+Alter Database OrnekVeritabani
+Modify File 
+(
+Name = 'GG',
+Size = 200
+)
+```
+
+# 58-) T-SQL DDL Alter Komutu İle Tabloya Kolon Ekleme
+- ### =Alter İle Olan Bir Tabloya Kolon Ekleme
+```SQL
+Alter Table OrnekTablo
+Add Kolon4 nvarchar(MAX)
+```
+
+# 59-) T-SQL DDL Alter Komutu İle Tablodaki Kolonu Güncelleme
+- ### =Alter İle Olan Bir Tablodaki Kolonu Güncelleme
+```SQL
+Alter Table OrnekTablo
+Alter Column Kolon4 int
+```
+
+# 60-) T-SQL DDL Alter Komutu İle Tablodaki Kolonu Silme
+- ### =Alter İle Tablodaki Kolonu Silme
+```SQL
+Alter Table OrnekTablo
+Drop Column Kolon4
+```
+
+# 61-) T-SQL DDL Alter Komutu İle Tabloya Constraint Ekleme
+- ### =Alter İle Tabloya Constraint Ekleme
+```SQL
+Alter Table OrnekTablo
+Add Constraint OrnekConstrint Default 'Boþ' for Kolon2
+```
+
+# 62-) T-SQL DDL Alter Komutu İle Tablodaki Constrainti Silme
+- ### =SP_RENAME İle Tablo Adı Güncelleme
+```SQL
+SP_RENAME 'OrnekTablo','OrnekTabloYeni'
+```
+
+# 64-) T-SQL Sp_Rename Komutu İle Kolon İsmini Değiştirme
+- ### SP_RENAME İle Kolon Güncelleme
+```SQL
+SP_RENAME 'OrnekTabloYeni.Kolon1','Kolon1453','Column'
+```
+
+# 65-) T-SQL DDL Drop Komutu
+- ### ===DROP===
+
+- ### Create İle oluşturulan veritabanı nesneelerini silmemize yarar
+
+- ### Prototip
+- ### Drop [Nesne] [Nesne Adı]
+```SQL
+Drop Table OrnekTabloYeni
+Drop Database OrnekVeritabani
+```
+
+# 66-) T-SQL Constraintler Giriş
+- ### Constraintler (Kısıtlayıcılar)
+- ### Constraintler sayesinde tablolar üzerinde istediğimiz şartlar ve durumlara göre kısıtlamalar yapabiliyoruz.
+
+- ### 1. DEFAULT COSTRAINT
+- ### 2. CHECK COSTRAINT
+- ### 3. PRIMARY KEY COSTRAINT
+- ### 4. UNIQUE COSTRAINT
+- ### 5. FOREIGN KEY COSTRAINT
+
+# 67-) T-SQL Default Constraint
+- ### ===DEFAULT CONSTRAINT===
+- ### Default Constraint sayesinde kolona bir deðer girilmediği taktirde varsayılan olarak ne girilmesi gerektiðini belirtebiliyoruz.
+
+- ### Genel Yapısı;
+-- Add Constraint [Constraint Adı] Default 'Varsayılan Değer' For [Kolon Adı]
+```SQL
+Create Table OrnekTablo
+(
+Id int primary key identity(1,1),
+Kolon1 nvarchar(max),
+Kolon2 int
+)
+
+Alter Table OrnekTablo
+Add Constraint Kolon1Constraint Default 'Boþ' For Kolon1
+
+Alter Table OrnekTablo
+Add Constraint Kolon2Constraint Default -1 For Kolon2
+
+Insert OrnekTablo(Kolon2) Values(0)
+Insert OrnekTablo(Kolon1) Values('Örnek Bir Deðer')
+
+Select * From OrnekTablo
+```
+
+# 68-) T-SQL Check Constraint
+- ### ===CHECK CONSTRAINT===
+- ### Bir kolona girilecek olan verinin belirli bir şarta uymasını zorunlu tutar.
+
+- ### Genel Yapısı;
+- ### Add Constraint [Constraint Adı] Check (Şart)
+```SQL
+Alter Table OrnekTablo
+Add Constraint Kolon2Kontrol Check ((Kolon2 * 5) % 2 = 0)
+```
+
+# 69-) T-SQL Check Constraint With Nocheck Komutu
+- ### DİKKAT!!!
+- ### Check constraint oluşturulmadan önce ilgili tabloda şarta aykırı değerler varsa eğer constraint oluşturulmayacaktır ! ! !
+- ### Ancak önceki kayıtları görmezden gelip genede Check Constrainti uygulamak istiyorsak "With Nocheck" komutu kullanılmalıdır.
+
+- ### With Nocheck Komutu
+- ### Şuana kadar olan kayıtları görmezden gelip, check constrainti uygulattırır.
+```SQL
+Alter Table OrnekTablo
+With Nocheck Add Constraint Kolon2Kontrol Check((Kolon2 * 5) % 2 = 0)
+```
+
+# 70-) T-SQL Primary Key Constraint
+- ### === PRIMARY KEY CONSTRAINT ===
+- ### Primary Key Constraint ile; o kolona eklenen primary key ile, başka tablolarda foreign key oluşturarak ilişki kurmamız mümkün olur.Bunun yanında o kolonun taşıdığı verinin tekil olacağı da garanti edilmiş olur. Primary Key contraint ile ayrıca CLUSTERED şindex oluşturulmuş da olur.
+
+- ### Genel Yapısı;
+- ### Add Constraint [Constraint Adı] Primary Key (Kolon Adı)
+
+- ### DİKKAT!!!
+- ### Primary Key Constraint kullanılan kolon primary key özelliğine sahip olmamalıdır.
+```SQL
+Alter Table OrnekTablo
+Add Constraint PrimaryId Primary Key (Id)
+```
