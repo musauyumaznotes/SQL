@@ -673,3 +673,52 @@ Delete From Urunler Where KategoriID < 3
 
 - ### [Dikkat Edilmesi Gerekenler!!!]
 - ### Delete sorgusuyla tablo içerisindeki tüm verileri silmeniz identity kolonunu sıfırlamayacaktır. Silme işleminden sonra ilk eklenen veride kalındığı yerden id değeri verilecektir.
+
+# 31-) T-SQL Union Komutu
+- ### Union | Union All
+
+- ### Union
+- ### Birden fazla select sorgusu sonucunu tek seferde alt alta göstermemizi sağlar
+
+```SQL
+Select Adi,SoyAdi from Personeller
+Select MusteriAdi,Musteriunvani from Musteriler
+
+Select Adi,SoyAdi from Personeller
+Union
+Select MusteriAdi,Musteriunvani from Musteriler
+```
+
+```SQL
+-- 2'den fazla
+Select Adi,SoyAdi from Personeller
+Union
+Select MusteriAdi,Musteriunvani from Musteriler
+Union
+Select SevkAdi,SevkAdresi from Satislar
+```
+
+- ### Joinler yan yana Union alt alta tabloları birleştirir. Joinlerde belirli(ilişkisel) bir klolon üzerinden birleştirme yapılırken, Union'da böyle bir durum yoktur.Union serseri bir şekilde/kabataslak birleştirir
+
+- ### Dikkat etmemiz gereken koşullar;
+- ### Union sorgusunun sonucunda oluşan tablonun kolon isimnleri, üstteki sorgunun kolon isimlerinden oluşturulur.
+- ### Üstteki sorgudan kaç kolon çekilmişse alttaki sorgudan da o kadar çekilmek zorundadırç
+- ### Üstteki sorgudan çekilen kolonların tipleriyle, alttaki sorgudan çekilen kolonların tipleri uyumlu olmalıdır.
+- ### Union tekrarlı kayıtları getirmez
+
+- ### Union'da kullanılan tablolara kolon eklenebilir. Dikkat etmemiz gereken nokta, yukarıdaki kurallar çerçevesinde aşağıya da yukarıya da aynı sayıda kolonların eklenmesi gerekmektedir
+```SQL
+Select Adi,SoyAdi,'Personel' from Personeller
+Union
+Select MusteriAdi,Musteriunvani,'Müşteri' from Musteriler
+```
+
+# 32-) T-SQL Union All Komutu
+- ### Union All
+- ### Union tekrarlý kayýtlarý getirmez. Tekrarlý kayýtlarý getirmek için Union All komutu kullanýlmaktadýr
+```SQL
+Select Adi,SoyAdi from Personeller
+Union All
+Select Adi,SoyAdi from Personeller
+```
+
